@@ -1,9 +1,4 @@
-#**Traffic Sign Recognition** 
-
-##Writeup Template
-
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
+#**Traffic Sign Recognition by Gaspard Shen** 
 ---
 
 **Build a Traffic Sign Recognition Project**
@@ -19,13 +14,13 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/visualization.jpg "Visualization"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
-[image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
+[image1]: ./Pictures/trainingdata_visual.png "Visual"
+[image2]: ./Pictures/grayscale.png "Grayscaling"
+[image3]: ./Pictures/normalized.png "Normalized"
+[image4]: ./Pictures/OpenCV.png "Data Augmentation"
+[image5]: ./Pictures/data_aug_visual.png "Visual"
+
+
 [image8]: ./examples/placeholder.png "Traffic Sign 5"
 
 ## Rubric Points
@@ -34,9 +29,7 @@ The goals / steps of this project are the following:
 ---
 ###Writeup / README
 
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
-
-You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
+####1. Here is a link to my [project code](https://github.com/igaspard/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
 
 ###Data Set Summary & Exploration
 
@@ -45,40 +38,48 @@ You're reading it! and here is a link to my [project code](https://github.com/ud
 I used the pandas library to calculate summary statistics of the traffic
 signs data set:
 
-* The size of training set is ?
-* The size of the validation set is ?
-* The size of test set is ?
-* The shape of a traffic sign image is ?
-* The number of unique classes/labels in the data set is ?
+* The size of training set is ? 34799
+* The size of the validation set is ? 4410
+* The size of test set is ? 12630
+* The shape of a traffic sign image is ? (32, 32, 3)
+* The number of unique classes/labels in the data set is ? 43
 
 ####2. Include an exploratory visualization of the dataset.
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
+Here is an exploratory visualization of the data set. It is a bar chart showing how many of each class of the training data.
 
 ![alt text][image1]
 
 ###Design and Test a Model Architecture
 
-####1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
+####1. Describe how you preprocessed the image data. 
 
-As a first step, I decided to convert the images to grayscale because ...
+As a first step, I decided to convert the images to grayscale because it is simple and can reduce two channel of chroma data.
+This can reduce the complexity of our conv network and improve the traing effienecy.
+Moreover the reference paper "Traffic Sign Recognition with Multi-Scale Convolutional Networks" also mention the grayscale good result.
 
 Here is an example of a traffic sign image before and after grayscaling.
 
 ![alt text][image2]
 
-As a last step, I normalized the image data because ...
-
-I decided to generate additional data because ... 
-
-To add more data to the the data set, I used the following techniques because ... 
-
-Here is an example of an original image and an augmented image:
+As a last step, I normalized the image data because the light condition is various in our sample and real world.
+After normalized image can avoid the too light image and too dark image.
+Here is an example of a traffic sign image before and after normalized.
 
 ![alt text][image3]
 
-The difference between the original data set and the augmented data set is the following ... 
+I decided to generate additional data because the training data distribution was imbalance.
+The max number of the training data is Speed limit (50km/h), it has 2010 samples, but the min one is Speed limit (20km/h) and only 180 samples. The machine learning need more data to improve it accuracy.
+To add more data to the the data set, I used the OpenCV image processing techniques such scale, brightness... etc to apply at the normalized image and increase the data set. 
+For the data below 1000, i apply the OpenCV and generate the sample up to 1000.
 
+Here is an example of an original image and an augmented image:
+
+![alt text][image4]
+
+After apply the data augmentation, here is the distribution of data. You can observe more balance data set.
+
+![alt text][image5]
 
 ####2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
